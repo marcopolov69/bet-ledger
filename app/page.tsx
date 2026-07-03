@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import DropZone from "@/components/DropZone";
+import HowToSheet from "@/components/HowToSheet";
 import HeroTicket from "@/components/HeroTicket";
 import StatGrid from "@/components/StatGrid";
 import CumulativeChart from "@/components/CumulativeChart";
@@ -17,6 +18,7 @@ export default function Home() {
   const [stats, setStats] = useState<StatsSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [howToOpen, setHowToOpen] = useState(false);
 
   const handleFile = useCallback(async (file: File) => {
     setBusy(true);
@@ -61,6 +63,15 @@ export default function Home() {
       {!stats ? (
         <div className="py-8 sm:py-16">
           <DropZone onFile={handleFile} error={error} busy={busy} />
+          <div className="text-center mt-4">
+            <button
+              onClick={() => setHowToOpen(true)}
+              className="label cursor-pointer underline underline-offset-4 decoration-[var(--amber)] hover:text-[var(--ink)] transition-colors"
+            >
+              Don&apos;t have your export yet? Get it in ~1 minute ↑
+            </button>
+          </div>
+          <HowToSheet open={howToOpen} onClose={() => setHowToOpen(false)} />
         </div>
       ) : (
         <div className="space-y-10">

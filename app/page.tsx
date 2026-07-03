@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import DropZone from "@/components/DropZone";
 import HowToSheet from "@/components/HowToSheet";
+import ShareCard from "@/components/ShareCard";
 import HeroTicket from "@/components/HeroTicket";
 import StatGrid from "@/components/StatGrid";
 import CumulativeChart from "@/components/CumulativeChart";
@@ -76,6 +77,7 @@ export default function Home() {
       ) : (
         <div className="space-y-10">
           <HeroTicket stats={stats} />
+          <ShareCard stats={stats} />
           <StatGrid stats={stats} />
           <div className="grid lg:grid-cols-[3fr_2fr] gap-4">
             <CumulativeChart stats={stats} />

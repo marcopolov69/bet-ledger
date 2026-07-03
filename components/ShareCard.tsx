@@ -1,0 +1,146 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { StatsSummary } from "@/lib/types";
+import { renderShareCard } from "@/lib/share-card";
+
+export default function ShareCard({ stats }: { stats: StatsSummary }) {
+  const [open, setOpen] = useState(false);
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const blobRef = useRef<Blob | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const [canNativeShare, setCanNativeShare] = useState(false);
+
+  const generate = useCallback(async () => {
+    setBusy(true);
+    try {
+      const blob = await renderShareCard(stats);
+      blobRef.current = blob;
+      setImgUrl((old) => {
+        if (old) URL.revokeObjectURL(old);
+        return URL.createObjectURL(blob);
+      });
+      const file = new File([blob], "betledger.png", { type: "image/png" });
+      setCanNativeShare(
+        typeof navigator.canShare === "function" &&
+          navigator.canShare({ files: [file] })
+      );
+      setOpen(true);
+    } finally {
+      setBusy(false);
+    }
+  }, [stats]);
+
+  useEffect(() => {
+    if (!open) return;
+    closeRef.current?.focus();
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const download = useCallback(() => {
+    if (!imgUrl) return;
+    const a = document.createElement("a");
+    a.href = imgUrl;
+    a.download = "betledger.png";
+    a.click();
+  }, [imgUrl]);
+
+  const nativeShare = useCallback(async () => {
+    if (!blobRef.current) return;
+    const file = new File([blobRef.current], "betledger.png", {
+      type: "image/png",
+    });
+    try {
+      await navigator.share({ files: [file], title: "My BetLedger" });
+    } catch {
+      // user cancelled — nothing to do
+    }
+  }, []);
+
+  return (
+    <>
+      <div className="text-center">
+        <button
+          onClick={generate}
+          disabled={busy}
+          className="display uppercase tracking-widest text-sm font-semibold cursor-pointer rounded-md border border-[var(--amber)] px-6 py-2.5 text-[var(--amber)] hover:bg-[var(--amber)] hover:text-[var(--bg)] transition-colors disabled:opacity-50"
+        >
+          {busy ? "Printing…" : "Share this ledger"}
+        </button>
+      </div>
+
+      <div
+        className={`fixed inset-0 z-50 ${open ? "" : "pointer-events-none"}`}
+        aria-hidden={!open}
+      >
+        <div
+          onClick={() => setOpen(false)}
+          className={`absolute inset-0 bg-black/70 transition-opacity duration-300 ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Share your ledger"
+          className={`absolute inset-x-0 bottom-0 sm:inset-0 sm:flex sm:items-center sm:justify-center transition-transform duration-300 ease-out ${
+            open ? "translate-y-0" : "translate-y-full"
+          }`}
+        >
+          <div className="slip !rounded-b-none sm:!rounded-b-md w-full sm:max-w-md mx-auto max-h-[90vh] overflow-y-auto px-5 pt-5 pb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="label-paper">BetLedger · Souvenir Print</div>
+              <button
+                ref={closeRef}
+                onClick={() => setOpen(false)}
+                aria-label="Close"
+                className="h-9 w-9 -mr-2 rounded-full text-xl leading-none text-[var(--paper-dim)] hover:text-[var(--paper-ink)] hover:bg-[rgba(33,31,24,0.07)] cursor-pointer"
+              >
+                ×
+              </button>
+            </div>
+
+            {imgUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={imgUrl}
+                alt="Your BetLedger share card: net profit/loss with key stats"
+                className="w-full rounded-md border border-[rgba(33,31,24,0.25)] shadow-[0_10px_30px_-12px_rgba(0,0,0,0.5)]"
+              />
+            )}
+
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <button
+                onClick={download}
+                className="display uppercase tracking-widest text-sm font-semibold cursor-pointer rounded-md border-2 border-[var(--paper-ink)] px-4 py-2.5 hover:bg-[var(--paper-ink)] hover:text-[var(--paper)] transition-colors"
+              >
+                Save image
+              </button>
+              {canNativeShare ? (
+                <button
+                  onClick={nativeShare}
+                  className="display uppercase tracking-widest text-sm font-semibold cursor-pointer rounded-md bg-[var(--paper-ink)] text-[var(--paper)] px-4 py-2.5 hover:opacity-85 transition-opacity"
+                >
+                  Share
+                </button>
+              ) : (
+                <div className="text-[11px] text-[var(--paper-dim)] self-center leading-snug">
+                  Save it, then post it anywhere.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

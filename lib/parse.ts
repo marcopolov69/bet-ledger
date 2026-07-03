@@ -70,12 +70,16 @@ export function parseHardRockDate(raw: string): number | null {
   ).getTime();
 }
 
-/** Extract each <Row>'s cell texts, honoring ss:Index gaps. */
+/**
+ * Extract each <Row>'s cell texts, honoring ss:Index gaps.
+ * Real exports namespace-prefix every tag (<ss:Row>, <ss:Cell>, <ss:Data>);
+ * older/other variants use bare tags. Accept both.
+ */
 function extractRows(xml: string): string[][] {
   const rows: string[][] = [];
-  const rowRe = /<Row\b[^>]*>([\s\S]*?)<\/Row>/g;
-  const cellRe = /<Cell\b([^>]*)\/>|<Cell\b([^>]*)>([\s\S]*?)<\/Cell>/g;
-  const dataRe = /<Data\b[^>]*>([\s\S]*?)<\/Data>/;
+  const rowRe = /<(?:\w+:)?Row\b[^>]*>([\s\S]*?)<\/(?:\w+:)?Row>/g;
+  const cellRe = /<(?:\w+:)?Cell\b([^>]*)\/>|<(?:\w+:)?Cell\b([^>]*)>([\s\S]*?)<\/(?:\w+:)?Cell>/g;
+  const dataRe = /<(?:\w+:)?Data\b[^>]*>([\s\S]*?)<\/(?:\w+:)?Data>/;
 
   let rowMatch: RegExpExecArray | null;
   while ((rowMatch = rowRe.exec(xml)) !== null) {
@@ -176,18 +180,23 @@ export function parseBets(rawText: string): Bet[] {
         legs: [],
       });
     } else {
-      // Parlay leg row (14 cells, shifted right by one). Attach to the
-      // preceding parent; never count in money math.
+      // Parlay leg row (14 cells, first cell empty). Attach to the preceding
+      // parent; never count in money math. Real exports keep leg values at
+      // the same column positions as the headers; some variants shift the
+      // whole row right by one — detect which by where Status landed.
       const parent = bets[bets.length - 1];
       if (!parent) continue;
+      // Shifted rows carry the leg's date where Status should be.
+      const atStatus = cells[col["Status"]] ?? "";
+      const shift = atStatus === "" || parseHardRockDate(atStatus) !== null ? 1 : 0;
       const leg: BetLeg = {
-        status: get("Status", 1),
-        league: get("League", 1),
-        match: get("Match", 1),
-        betType: get("Bet Type", 1),
-        market: get("Market", 1),
-        price: parseNumber(get("Price", 1)),
-        result: get("Result", 1),
+        status: get("Status", shift),
+        league: get("League", shift),
+        match: get("Match", shift),
+        betType: get("Bet Type", shift),
+        market: get("Market", shift),
+        price: parseNumber(get("Price", shift)),
+        result: get("Result", shift),
       };
       if (leg.match === "" && leg.market === "") continue;
       parent.legs.push(leg);

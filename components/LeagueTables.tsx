@@ -17,7 +17,7 @@ function Table({ title, rows, tone }: { title: string; rows: LeagueRow[]; tone: 
                 <span className="text-[var(--ink-dim)] text-[10px] tnum"> · {r.count}</span>
               </td>
               <td
-                className={`py-2 text-right tnum font-semibold ${
+                className={`py-2 text-right tnum font-semibold whitespace-nowrap ${
                   tone === "profit" ? "text-[var(--green-bright)]" : "text-[var(--red-bright)]"
                 }`}
               >

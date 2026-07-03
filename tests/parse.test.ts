@@ -58,7 +58,7 @@ describe("parseHardRockDate", () => {
   });
 });
 
-describe("parseBets", () => {
+describe("parseBets (real namespaced format)", () => {
   const bets = parseBets(fixture);
 
   it("finds 6 parent bets (leg rows are not counted as bets)", () => {
@@ -90,7 +90,7 @@ describe("parseBets", () => {
     expect(co.payout).toBe(22.5);
   });
 
-  it("attaches 3 leg rows to the parlay parent, never as separate bets", () => {
+  it("attaches 3 unshifted leg rows to the parlay parent", () => {
     const parlay = bets[4];
     expect(parlay.isParlay).toBe(true);
     expect(parlay.betType).toBe("MULTIPLE");
@@ -100,11 +100,13 @@ describe("parseBets", () => {
     expect(parlay.legs[0].match).toBe(
       "Los Angeles Lakers vs Golden State Warriors"
     );
+    expect(parlay.legs[0].market).toBe("Lakers / Lakers");
+    expect(parlay.legs[0].price).toBe(2.2);
   });
 
-  it("survives the unescaped ampersand in a leg market name", () => {
+  it("survives the unescaped ampersand in a leg bet type", () => {
     const parlay = bets[4];
-    expect(parlay.legs[0].market).toBe("First Half & Game Winner Parlay");
+    expect(parlay.legs[0].betType).toBe("First Half & Game Winner Parlay");
   });
 
   it("parses the open bet with null payout and a potential payout", () => {
@@ -115,15 +117,17 @@ describe("parseBets", () => {
   });
 
   it("locates columns by header name even when column order changes", () => {
-    // Swap Wager and Price header positions AND their data cells by
-    // rebuilding a two-column-swapped copy of the fixture.
-    const swapped = fixture
-      .replace(
-        "<Cell><Data ss:Type=\"String\">Price</Data></Cell>\n    <Cell><Data ss:Type=\"String\">Wager</Data></Cell>",
-        "<Cell><Data ss:Type=\"String\">Wager</Data></Cell>\n    <Cell><Data ss:Type=\"String\">Price</Data></Cell>"
-      );
+    const priceHeader =
+      '  <ss:Cell>\n    <ss:Data ss:Type="String">Price</ss:Data>\n  </ss:Cell>\n';
+    const wagerHeader =
+      '  <ss:Cell>\n    <ss:Data ss:Type="String">Wager</ss:Data>\n  </ss:Cell>\n';
+    const swapped = fixture.replace(
+      priceHeader + wagerHeader,
+      wagerHeader + priceHeader
+    );
+    expect(swapped).not.toBe(fixture);
     const swappedBets = parseBets(swapped);
-    // Header says col 7 is Wager now, so the first bet's "2.50" cell is wager.
+    // Header now says col 7 is Wager, so the first bet's "2.50" cell is wager.
     expect(swappedBets[0].wager).toBe(2.5);
     expect(swappedBets[0].price).toBe(10);
   });
@@ -133,5 +137,35 @@ describe("parseBets", () => {
       ParseError
     );
     expect(() => parseBets("just some text")).toThrow(ParseError);
+  });
+});
+
+describe("parseBets (format variants)", () => {
+  it("parses bare (non-namespaced) tags too", () => {
+    const bare = fixture
+      .replace(/<ss:/g, "<")
+      .replace(/<\/ss:/g, "</")
+      .replace(/ ss:Type=/g, " Type=")
+      .replace(/ ss:Name=/g, " Name=");
+    const bets = parseBets(bare);
+    expect(bets).toHaveLength(6);
+    expect(bets[4].legs).toHaveLength(3);
+  });
+
+  it("handles leg rows shifted right by one (older export variant)", () => {
+    const cell = (v: string) => `<Cell><Data Type="String">${v}</Data></Cell>`;
+    const row = (vals: string[]) => `<Row>${vals.map(cell).join("")}</Row>`;
+    const xml = `<?xml version="1.0"?><Workbook><Worksheet><Table>
+      ${row(["Date Placed","Status","League","Match","Bet Type","Market","Price","Wager","Winnings","Payout","Potential Payout","Result","Bet Slip ID"])}
+      ${row(["15 Feb 2026 @ 5:30pm","Lost","","2 Selections","MULTIPLE","MULTIPLE","4.00","10.00","0.00","0.00","40.00","Lose","B1"])}
+      ${row(["","1 Feb 2026 @ 1:00pm","Win","NBA","Lakers vs Celtics","Moneyline","Lakers","2.00","null","null","null","null","Win",""])}
+      ${row(["","2 Feb 2026 @ 1:00pm","Lose","NFL","Chiefs vs Broncos","Spread","Chiefs -7.5","2.00","null","null","null","null","Lose",""])}
+    </Table></Worksheet></Workbook>`;
+    const bets = parseBets(xml);
+    expect(bets).toHaveLength(1);
+    expect(bets[0].legs).toHaveLength(2);
+    expect(bets[0].legs[0].status).toBe("Win");
+    expect(bets[0].legs[0].match).toBe("Lakers vs Celtics");
+    expect(bets[0].legs[1].market).toBe("Chiefs -7.5");
   });
 });

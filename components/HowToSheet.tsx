@@ -2,49 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-// Paste a Loom share link's embed URL here (https://www.loom.com/embed/<id>)
-// and the video walkthrough appears at the top of the sheet automatically.
-const LOOM_EMBED_URL: string | null = null;
-
-const STEPS: { text: React.ReactNode; chip?: string }[] = [
-  {
-    text: (
-      <>
-        Open{" "}
-        <a
-          href="https://www.hardrock.bet"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-semibold underline underline-offset-2 decoration-[var(--amber)] hover:text-[#9c6b1c]"
-        >
-          hardrock.bet ↗
-        </a>{" "}
-        and sign in — phone or computer both work.
-      </>
-    ),
-  },
-  {
-    text: <>Tap your profile in the top-right corner to open the account panel.</>,
-    chip: "Account",
-  },
-  {
-    text: <>In the panel, open your bet history.</>,
-    chip: "Bet History",
-  },
-  {
-    text: (
-      <>
-        Hit export — Hard Rock hands you a file called{" "}
-        <span className="font-semibold">All_Bets_Export.xls</span>.
-      </>
-    ),
-    chip: "Export",
-  },
-  {
-    text: <>Come back here and drop that file on the ticket. That&apos;s it.</>,
-  },
-];
-
 export default function HowToSheet({
   open,
   onClose,
@@ -54,12 +11,22 @@ export default function HowToSheet({
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const restoreRef = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!open) return;
     restoreRef.current = document.activeElement as HTMLElement;
     closeRef.current?.focus();
     document.body.style.overflow = "hidden";
+    // Restart the walkthrough from the top each time the sheet opens,
+    // unless the user prefers reduced motion.
+    const video = videoRef.current;
+    if (video) {
+      video.currentTime = 0;
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        video.play().catch(() => {});
+      }
+    }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -67,6 +34,7 @@ export default function HowToSheet({
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      videoRef.current?.pause();
       restoreRef.current?.focus();
     };
   }, [open, onClose]);
@@ -89,7 +57,7 @@ export default function HowToSheet({
         role="dialog"
         aria-modal="true"
         aria-label="How to get your Hard Rock bet export"
-        className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg transition-transform duration-300 ease-out ${
+        className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-xl transition-transform duration-300 ease-out ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
       >
@@ -117,38 +85,59 @@ export default function HowToSheet({
             </button>
           </div>
 
-          {LOOM_EMBED_URL && (
-            <div className="mt-4 rounded-md overflow-hidden border border-[rgba(33,31,24,0.2)]">
-              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <iframe
-                  src={LOOM_EMBED_URL}
-                  title="Video walkthrough: exporting your Hard Rock bet history"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                />
-              </div>
-            </div>
-          )}
+          <div className="mt-4 flex items-baseline gap-4">
+            <span className="display font-bold text-2xl text-[var(--amber)] tnum w-5 text-right shrink-0">
+              1
+            </span>
+            <p className="text-sm leading-relaxed">
+              Log into your Hard Rock account at{" "}
+              <a
+                href="https://www.hardrock.bet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold underline underline-offset-2 decoration-[var(--amber)] hover:text-[#9c6b1c]"
+              >
+                hardrock.bet ↗
+              </a>
+            </p>
+          </div>
 
-          <ol className="mt-5 space-y-4">
-            {STEPS.map((step, i) => (
-              <li key={i} className="flex items-baseline gap-4">
-                <span className="display font-bold text-2xl text-[var(--amber)] tnum w-5 text-right shrink-0">
-                  {i + 1}
-                </span>
-                <div className="text-sm leading-relaxed">
-                  {step.text}
-                  {step.chip && (
-                    <span className="ml-2 inline-block align-baseline rounded border border-[rgba(33,31,24,0.3)] bg-[rgba(33,31,24,0.05)] px-2 py-0.5 text-[11px] font-semibold tracking-wide">
-                      {step.chip}
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div className="mt-3 flex items-baseline gap-4">
+            <span className="display font-bold text-2xl text-[var(--amber)] tnum w-5 text-right shrink-0">
+              2
+            </span>
+            <p className="text-sm leading-relaxed">
+              Follow along — then drop the downloaded{" "}
+              <span className="font-semibold">All_Bets_Export.xls</span> on the
+              ticket:
+            </p>
+          </div>
 
-          <div className="mt-6 rounded border-2 border-dashed border-[rgba(33,31,24,0.3)] px-4 py-3 text-[12px] leading-relaxed text-[var(--paper-dim)]">
+          <div className="mt-3 rounded-md overflow-hidden border border-[rgba(33,31,24,0.25)] shadow-[0_8px_24px_-12px_rgba(0,0,0,0.4)]">
+            <video
+              ref={videoRef}
+              src="/how-to-export.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls
+              preload="metadata"
+              onCanPlay={(e) => {
+                if (
+                  open &&
+                  e.currentTarget.paused &&
+                  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                ) {
+                  e.currentTarget.play().catch(() => {});
+                }
+              }}
+              aria-label="Screen recording: opening the account panel, choosing History, Bet History, then Export"
+              className="block w-full"
+            />
+          </div>
+
+          <div className="mt-5 rounded border-2 border-dashed border-[rgba(33,31,24,0.3)] px-4 py-3 text-[12px] leading-relaxed text-[var(--paper-dim)]">
             <span className="font-bold text-[var(--paper-ink)] uppercase tracking-wide">
               Heads up:
             </span>{" "}

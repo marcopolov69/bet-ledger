@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+ <Worksheet ss:Name="All Bets">
+  <Table>
+   <Row>
+    <Cell><Data ss:Type="String">Date Placed</Data></Cell>
+    <Cell><Data ss:Type="String">Status</Data></Cell>
+    <Cell><Data ss:Type="String">League</Data></Cell>
+    <Cell><Data ss:Type="String">Match</Data></Cell>
+    <Cell><Data ss:Type="String">Bet Type</Data></Cell>
+    <Cell><Data ss:Type="String">Market</Data></Cell>
+    <Cell><Data ss:Type="String">Price</Data></Cell>
+    <Cell><Data ss:Type="String">Wager</Data></Cell>
+    <Cell><Data ss:Type="String">Winnings</Data></Cell>
+    <Cell><Data ss:Type="String">Payout</Data></Cell>
+    <Cell><Data ss:Type="String">Potential Payout</Data></Cell>
+    <Cell><Data ss:Type="String">Result</Data></Cell>
+    <Cell><Data ss:Type="String">Bet Slip ID</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">1 Jan 2026 @ 7:05pm</Data></Cell>
+    <Cell><Data ss:Type="String">Won</Data></Cell>
+    <Cell><Data ss:Type="String">NBA, Regular</Data></Cell>
+    <Cell><Data ss:Type="String">Miami Heat vs Boston Celtics</Data></Cell>
+    <Cell><Data ss:Type="String">Moneyline</Data></Cell>
+    <Cell><Data ss:Type="String">Moneyline</Data></Cell>
+    <Cell><Data ss:Type="String">2.50</Data></Cell>
+    <Cell><Data ss:Type="String">10.00</Data></Cell>
+    <Cell><Data ss:Type="String">15.00</Data></Cell>
+    <Cell><Data ss:Type="String">25.00</Data></Cell>
+    <Cell><Data ss:Type="String">25.00</Data></Cell>
+    <Cell><Data ss:Type="String">Win</Data></Cell>
+    <Cell><Data ss:Type="String">A1000001</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">5 Jan 2026 @ 1:15pm</Data></Cell>
+    <Cell><Data ss:Type="String">Lost</Data></Cell>
+    <Cell><Data ss:Type="String">NFL</Data></Cell>
+    <Cell><Data ss:Type="String">Buffalo Bills vs New York Jets</Data></Cell>
+    <Cell><Data ss:Type="String">Spread</Data></Cell>
+    <Cell><Data ss:Type="String">Point Spread</Data></Cell>
+    <Cell><Data ss:Type="String">1.91</Data></Cell>
+    <Cell><Data ss:Type="String">20.00</Data></Cell>
+    <Cell><Data ss:Type="String">0.00</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">38.20</Data></Cell>
+    <Cell><Data ss:Type="String">Lose</Data></Cell>
+    <Cell><Data ss:Type="String">A1000002</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">10 Feb 2026 @ 9:00am</Data></Cell>
+    <Cell><Data ss:Type="String">Cashed Out</Data></Cell>
+    <Cell><Data ss:Type="String">NCAAB, Regular</Data></Cell>
+    <Cell><Data ss:Type="String">Duke vs North Carolina</Data></Cell>
+    <Cell><Data ss:Type="String">Total</Data></Cell>
+    <Cell><Data ss:Type="String">Over/Under</Data></Cell>
+    <Cell><Data ss:Type="String">3.00</Data></Cell>
+    <Cell><Data ss:Type="String">30.00</Data></Cell>
+    <Cell><Data ss:Type="String">-7.50</Data></Cell>
+    <Cell><Data ss:Type="String">22.50</Data></Cell>
+    <Cell><Data ss:Type="String">90.00</Data></Cell>
+    <Cell><Data ss:Type="String">Cash Out</Data></Cell>
+    <Cell><Data ss:Type="String">A1000003</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">12 Feb 2026 @ 2:00pm</Data></Cell>
+    <Cell><Data ss:Type="String">Void</Data></Cell>
+    <Cell><Data ss:Type="String">NHL</Data></Cell>
+    <Cell><Data ss:Type="String">Florida Panthers vs Tampa Bay Lightning</Data></Cell>
+    <Cell><Data ss:Type="String">Moneyline</Data></Cell>
+    <Cell><Data ss:Type="String">Moneyline</Data></Cell>
+    <Cell><Data ss:Type="String">2.10</Data></Cell>
+    <Cell><Data ss:Type="String">15.00</Data></Cell>
+    <Cell><Data ss:Type="String">0.00</Data></Cell>
+    <Cell><Data ss:Type="String">15.00</Data></Cell>
+    <Cell><Data ss:Type="String">31.50</Data></Cell>
+    <Cell><Data ss:Type="String">Void</Data></Cell>
+    <Cell><Data ss:Type="String">A1000004</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">15 Feb 2026 @ 5:30pm</Data></Cell>
+    <Cell><Data ss:Type="String">Lost</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">3 Selections</Data></Cell>
+    <Cell><Data ss:Type="String">MULTIPLE</Data></Cell>
+    <Cell><Data ss:Type="String">MULTIPLE</Data></Cell>
+    <Cell><Data ss:Type="String">26.00</Data></Cell>
+    <Cell><Data ss:Type="String">10.00</Data></Cell>
+    <Cell><Data ss:Type="String">0.00</Data></Cell>
+    <Cell><Data ss:Type="String">0.00</Data></Cell>
+    <Cell><Data ss:Type="String">260.00</Data></Cell>
+    <Cell><Data ss:Type="String">Lose</Data></Cell>
+    <Cell><Data ss:Type="String">A1000005</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">14 Feb 2026 @ 7:00pm</Data></Cell>
+    <Cell><Data ss:Type="String">Win</Data></Cell>
+    <Cell><Data ss:Type="String">NBA, Regular</Data></Cell>
+    <Cell><Data ss:Type="String">Los Angeles Lakers vs Golden State Warriors</Data></Cell>
+    <Cell><Data ss:Type="String">Moneyline</Data></Cell>
+    <Cell><Data ss:Type="String">First Half & Game Winner Parlay</Data></Cell>
+    <Cell><Data ss:Type="String">2.20</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">Win</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">15 Feb 2026 @ 8:00pm</Data></Cell>
+    <Cell><Data ss:Type="String">Lose</Data></Cell>
+    <Cell><Data ss:Type="String">NFL</Data></Cell>
+    <Cell><Data ss:Type="String">Kansas City Chiefs vs Denver Broncos</Data></Cell>
+    <Cell><Data ss:Type="String">Spread</Data></Cell>
+    <Cell><Data ss:Type="String">Point Spread</Data></Cell>
+    <Cell><Data ss:Type="String">1.91</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">Lose</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">16 Feb 2026 @ 1:00pm</Data></Cell>
+    <Cell><Data ss:Type="String">Lose</Data></Cell>
+    <Cell><Data ss:Type="String">NHL</Data></Cell>
+    <Cell><Data ss:Type="String">Boston Bruins vs Montreal Canadiens</Data></Cell>
+    <Cell><Data ss:Type="String">Total</Data></Cell>
+    <Cell><Data ss:Type="String">Over/Under</Data></Cell>
+    <Cell><Data ss:Type="String">6.19</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">Lose</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">1 Jul 2026 @ 11:35am</Data></Cell>
+    <Cell><Data ss:Type="String">Open</Data></Cell>
+    <Cell><Data ss:Type="String">MLB</Data></Cell>
+    <Cell><Data ss:Type="String">New York Yankees vs Boston Red Sox</Data></Cell>
+    <Cell><Data ss:Type="String">Moneyline</Data></Cell>
+    <Cell><Data ss:Type="String">Moneyline</Data></Cell>
+    <Cell><Data ss:Type="String">12.00</Data></Cell>
+    <Cell><Data ss:Type="String">5.00</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">null</Data></Cell>
+    <Cell><Data ss:Type="String">60.00</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">A1000006</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

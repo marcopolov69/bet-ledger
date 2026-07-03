@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BetLedger
 
-## Getting Started
+Drop in your Hard Rock Bet `All_Bets_Export.xls` and instantly see your all-time betting stats: total wagered, profit/loss, records, and charts.
 
-First, run the development server:
+**Everything runs in your browser. Your file never leaves your device.** No accounts, no database, no uploads.
+
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000 and drop in your export file
+(get it in the Hard Rock app: **Account → Bet History → Export**).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Run the tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test
+```
 
-## Learn More
+The parser and stats engine (`lib/parse.ts`, `lib/stats.ts`) are pure functions
+tested against a fixture export in `tests/fixtures/`.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy to Vercel (free)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push this repo to GitHub.
+2. Go to [vercel.com](https://vercel.com), sign up with GitHub, click **Add New → Project**, pick this repo, and click **Deploy**. That's it — Vercel auto-detects Next.js.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Every `git push` after that redeploys automatically.
 
-## Deploy on Vercel
+## Architecture notes (Phase 2 ready)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `lib/parse.ts` — Hard Rock export (SpreadsheetML 2003 XML) → `Bet[]`. Pure, regex-based, no browser APIs, so the same code can run server-side later.
+- `lib/stats.ts` — `Bet[]` → `StatsSummary`, a flat serializable JSON object. This exact object is the future leaderboard payload.
+- Phase 2 (leaderboard) bolts on as an API route that re-runs these same modules server-side — no rewrite needed.

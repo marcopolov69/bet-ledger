@@ -1,26 +1,214 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* lounge */
+  --bg: #101418;
+  --bg-deep: #0b0e11;
+  --bg-raised: #161c22;
+  --line: #242d36;
+  --ink: #e9edf1;
+  --ink-dim: #8b97a2;
+
+  /* paper slip */
+  --paper: #f2ecda;
+  --paper-edge: #e4dcc4;
+  --paper-ink: #211f18;
+  --paper-dim: #77715c;
+
+  /* semantics */
+  --green: #2e9e63;
+  --green-bright: #3fc07c;
+  --red: #e2543e;
+  --red-bright: #ff6a52;
+  --amber: #e8a33d;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-deep: var(--bg-deep);
+  --color-raised: var(--bg-raised);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-paper: var(--paper);
+  --color-paper-ink: var(--paper-ink);
+  --color-paper-dim: var(--paper-dim);
+  --color-profit: var(--green);
+  --color-loss: var(--red);
+  --color-odds: var(--amber);
+  --font-display: var(--font-saira), "Arial Narrow", sans-serif;
+  --font-mono: var(--font-plex-mono), "Courier New", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  background:
+    radial-gradient(1200px 600px at 50% -200px, #1a2833 0%, transparent 60%),
+    radial-gradient(900px 500px at 85% 110%, #131b14 0%, transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* felt-table grain over the whole lounge */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* every place money appears */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.display {
+  font-family: var(--font-display);
+}
+
+/* ---------- paper slip ---------- */
+.slip {
+  position: relative;
+  color: var(--paper-ink);
+  background:
+    linear-gradient(177deg, rgba(255, 255, 255, 0.5), transparent 40%),
+    var(--paper);
+  border-radius: 6px;
+  box-shadow:
+    0 1px 0 var(--paper-edge) inset,
+    0 30px 60px -20px rgba(0, 0, 0, 0.65),
+    0 10px 24px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* paper fiber */
+.slip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.37  0 0 0 0 0.28  0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+/* perforation line with punched side notches */
+.perf {
+  position: relative;
+  height: 0;
+  border-top: 2px dashed rgba(33, 31, 24, 0.3);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.perf::before,
+.perf::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35) inset;
+}
+.perf::before { left: -19px; }
+.perf::after { right: -19px; }
+
+/* barcode strip */
+.barcode {
+  height: 42px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--paper-ink) 0 2px, transparent 2px 5px,
+      var(--paper-ink) 5px 6px, transparent 6px 11px,
+      var(--paper-ink) 11px 14px, transparent 14px 17px,
+      var(--paper-ink) 17px 18px, transparent 18px 24px,
+      var(--paper-ink) 24px 27px, transparent 27px 30px);
+  opacity: 0.85;
+}
+
+/* ---------- rubber stamp ---------- */
+.stamp {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  border: 4px solid currentColor;
+  outline: 1.5px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 6px;
+  padding: 0.15em 0.5em;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0.9 0.28 0'/%3E%3C/filter%3E%3Crect width='300' height='120' fill='%23fff'/%3E%3Crect width='300' height='120' filter='url(%23g)'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0.9 0.28 0'/%3E%3C/filter%3E%3Crect width='300' height='120' fill='%23fff'/%3E%3Crect width='300' height='120' filter='url(%23g)'/%3E%3C/svg%3E");
+  mask-size: cover;
+  -webkit-mask-size: cover;
+}
+.stamp--loss { color: #c0331d; }
+.stamp--profit { color: #1e7d4b; }
+
+@keyframes stamp-in {
+  0% { transform: rotate(var(--stamp-rot, -8deg)) scale(2.4); opacity: 0; }
+  55% { transform: rotate(var(--stamp-rot, -8deg)) scale(0.94); opacity: 1; }
+  100% { transform: rotate(var(--stamp-rot, -8deg)) scale(1); opacity: 0.9; }
+}
+.stamp-anim {
+  animation: stamp-in 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) 0.35s both;
+}
+
+@keyframes rise {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.rise { animation: rise 0.5s ease-out both; }
+.rise-1 { animation-delay: 0.05s; }
+.rise-2 { animation-delay: 0.12s; }
+.rise-3 { animation-delay: 0.2s; }
+.rise-4 { animation-delay: 0.28s; }
+.rise-5 { animation-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp-anim,
+  .rise {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* dark lounge panels */
+.panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 30%), var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.label-paper {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
 }

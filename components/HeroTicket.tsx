@@ -10,27 +10,22 @@ export default function HeroTicket({ stats }: { stats: StatsSummary }) {
   return (
     <div className="relative w-full max-w-2xl mx-auto rise">
       <div className="slip overflow-hidden px-6 sm:px-8 pt-6">
-        {/* rubber stamp — top-right corner, clipped by the ticket edge */}
+        {/* rubber stamp — small, faded, fully visible in the top-right corner */}
         <div
           aria-hidden="true"
-          className="absolute top-1 -right-6 sm:top-2 sm:-right-8 pointer-events-none z-10"
+          className="absolute top-9 right-4 sm:top-6 sm:right-8 pointer-events-none z-10 opacity-80"
         >
           <div
-            className={`stamp stamp-anim display text-2xl sm:text-4xl whitespace-nowrap ${
+            className={`stamp stamp-anim display text-sm sm:text-xl whitespace-nowrap ${
               negative ? "stamp--loss" : "stamp--profit"
             }`}
-            style={{ "--stamp-rot": "30deg" } as React.CSSProperties}
+            style={{ "--stamp-rot": "18deg" } as React.CSSProperties}
           >
             {negative ? "House Wins" : "Printing Money"}
           </div>
         </div>
         <div className="flex items-baseline justify-between">
           <span className="label-paper">BetLedger · Official Ledger</span>
-          <span className="label-paper tnum">
-            {stats.firstBetAt !== null && stats.lastBetAt !== null
-              ? `${shortDate(stats.firstBetAt)} — ${shortDate(stats.lastBetAt)}`
-              : ""}
-          </span>
         </div>
 
         <div className="text-center pt-8 pb-6">
@@ -78,6 +73,14 @@ export default function HeroTicket({ stats }: { stats: StatsSummary }) {
             </span>{" "}
             settled bets graded
             {stats.voids > 0 && <> · {stats.voids} void</>}
+            {stats.firstBetAt !== null && stats.lastBetAt !== null && (
+              <>
+                <br />
+                <span className="tnum">
+                  {shortDate(stats.firstBetAt)} — {shortDate(stats.lastBetAt)}
+                </span>
+              </>
+            )}
           </div>
           <div className="barcode w-32 sm:w-44 shrink-0" aria-hidden="true" />
         </div>

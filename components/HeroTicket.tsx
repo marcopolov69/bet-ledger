@@ -9,7 +9,21 @@ export default function HeroTicket({ stats }: { stats: StatsSummary }) {
 
   return (
     <div className="relative w-full max-w-2xl mx-auto rise">
-      <div className="slip px-6 sm:px-8 pt-6">
+      <div className="slip overflow-hidden px-6 sm:px-8 pt-6">
+        {/* rubber stamp — top-right corner, clipped by the ticket edge */}
+        <div
+          aria-hidden="true"
+          className="absolute top-1 -right-6 sm:top-2 sm:-right-8 pointer-events-none z-10"
+        >
+          <div
+            className={`stamp stamp-anim display text-2xl sm:text-4xl whitespace-nowrap ${
+              negative ? "stamp--loss" : "stamp--profit"
+            }`}
+            style={{ "--stamp-rot": "30deg" } as React.CSSProperties}
+          >
+            {negative ? "House Wins" : "Printing Money"}
+          </div>
+        </div>
         <div className="flex items-baseline justify-between">
           <span className="label-paper">BetLedger · Official Ledger</span>
           <span className="label-paper tnum">
@@ -66,21 +80,6 @@ export default function HeroTicket({ stats }: { stats: StatsSummary }) {
             {stats.voids > 0 && <> · {stats.voids} void</>}
           </div>
           <div className="barcode w-32 sm:w-44 shrink-0" aria-hidden="true" />
-        </div>
-      </div>
-
-      {/* rubber stamp */}
-      <div
-        aria-hidden="true"
-        className="absolute top-[18%] left-1/2 -translate-x-1/2 pointer-events-none"
-      >
-        <div
-          className={`stamp stamp-anim display text-3xl sm:text-5xl whitespace-nowrap ${
-            negative ? "stamp--loss" : "stamp--profit"
-          }`}
-          style={{ "--stamp-rot": negative ? "-8deg" : "6deg" } as React.CSSProperties}
-        >
-          {negative ? "House Wins" : "Printing Money"}
         </div>
       </div>
     </div>

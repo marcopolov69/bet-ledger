@@ -98,12 +98,6 @@ export default function DropZone({ onFile, error, busy }: DropZoneProps) {
         }}
       />
 
-      <p className="mt-8 text-center text-xs text-[var(--ink-dim)] leading-relaxed">
-        Get your export in the Hard Rock app:{" "}
-        <span className="text-[var(--ink)]">
-          Account → Bet History → Export
-        </span>
-      </p>
     </div>
   );
 }

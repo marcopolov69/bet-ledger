@@ -95,7 +95,7 @@ export default function Home() {
               onClick={() => setHowToOpen(true)}
               className="label cursor-pointer underline underline-offset-4 decoration-[var(--amber)] hover:text-[var(--ink)] transition-colors"
             >
-              Don&apos;t have your export yet? Get it in ~1 minute ↑
+              How to get your All Bets Export (45 seconds)
             </button>
           </div>
           <HowToSheet open={howToOpen} onClose={() => setHowToOpen(false)} />
@@ -118,12 +118,7 @@ export default function Home() {
       )}
 
       <footer className="mt-16 pt-6 border-t border-[var(--line)] text-[11px] text-[var(--ink-dim)] leading-relaxed">
-        <p>
-          Grading happens instantly in your browser. Graded exports and their
-          summary stats are stored securely — no accounts, no names — to power
-          upcoming features like the leaderboard. BetLedger is not affiliated
-          with Hard Rock Bet.
-        </p>
+        <p>BetLedger is not affiliated with Hard Rock Bet.</p>
         <p className="mt-1">
           Gambling problem? Call{" "}
           <a href="tel:1-800-522-4700" className="underline underline-offset-2">

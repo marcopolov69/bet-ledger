@@ -17,7 +17,7 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "BetLedger — See your real Hard Rock P&L",
   description:
-    "Drop in your Hard Rock Bet export and instantly see your all-time betting stats: total wagered, profit/loss, records, and charts. Everything runs in your browser — your file never leaves your device.",
+    "Drop in your Hard Rock Bet export and instantly see your all-time betting stats: total wagered, profit/loss, records, and charts. Graded instantly in your browser — no account needed.",
   openGraph: {
     title: "BetLedger — See your real Hard Rock P&L",
     description:

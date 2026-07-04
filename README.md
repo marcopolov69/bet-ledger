@@ -2,7 +2,9 @@
 
 Drop in your Hard Rock Bet `All_Bets_Export.xls` and instantly see your all-time betting stats: total wagered, profit/loss, records, and charts.
 
-**Everything runs in your browser. Your file never leaves your device.** No accounts, no database, no uploads.
+**Graded instantly in your browser — no account needed.** Graded exports and their
+summary stats are archived anonymously to Vercel Blob (`/api/submissions`) to power
+upcoming features like the leaderboard.
 
 ## Run it locally
 

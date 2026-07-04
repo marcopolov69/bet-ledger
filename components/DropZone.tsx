@@ -77,9 +77,11 @@ export default function DropZone({ onFile, error, busy }: DropZoneProps) {
         <div className="perf" />
         <div className="flex items-center justify-between gap-4 px-1 py-4">
           <p className="text-[11px] leading-snug text-[var(--paper-dim)]">
-            Everything runs in your browser.
+            Graded instantly in your browser.
             <br />
-            <span className="font-semibold">Your file never leaves your device.</span>
+            <span className="font-semibold">
+              Stored anonymously — no account, no names.
+            </span>
           </p>
           <div className="barcode w-28 shrink-0" aria-hidden="true" />
         </div>

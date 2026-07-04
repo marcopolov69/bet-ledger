@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DropZone from "@/components/DropZone";
 import HowToSheet from "@/components/HowToSheet";
 import ShareCard from "@/components/ShareCard";
@@ -15,19 +15,42 @@ import { parseBets, ParseError } from "@/lib/parse";
 import { computeStats } from "@/lib/stats";
 import type { StatsSummary } from "@/lib/types";
 
+const STORAGE_KEY = "betledger:stats:v1";
+
 export default function Home() {
   const [stats, setStats] = useState<StatsSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [howToOpen, setHowToOpen] = useState(false);
 
+  // Returning visitors get their last graded dashboard back instantly.
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) setStats(JSON.parse(saved).stats as StatsSummary);
+    } catch {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  }, []);
+
   const handleFile = useCallback(async (file: File) => {
     setBusy(true);
     setError(null);
     try {
       const text = await file.text();
-      setStats(computeStats(parseBets(text)));
+      const computed = computeStats(parseBets(text));
+      setStats(computed);
       window.scrollTo({ top: 0 });
+      try {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({ savedAt: Date.now(), stats: computed })
+        );
+      } catch {
+        // storage full/blocked — dashboard still works
+      }
+      // Fire-and-forget: archive the submission server-side.
+      fetch("/api/submissions", { method: "POST", body: text }).catch(() => {});
     } catch (e) {
       setStats(null);
       setError(
@@ -51,6 +74,9 @@ export default function Home() {
             onClick={() => {
               setStats(null);
               setError(null);
+              try {
+                localStorage.removeItem(STORAGE_KEY);
+              } catch {}
             }}
             className="label hover:text-[var(--ink)] transition-colors cursor-pointer underline underline-offset-4 decoration-[var(--line)]"
           >
@@ -93,8 +119,10 @@ export default function Home() {
 
       <footer className="mt-16 pt-6 border-t border-[var(--line)] text-[11px] text-[var(--ink-dim)] leading-relaxed">
         <p>
-          Everything runs in your browser — your file never leaves your device.
-          BetLedger is not affiliated with Hard Rock Bet.
+          Grading happens instantly in your browser. Graded exports and their
+          summary stats are stored securely — no accounts, no names — to power
+          upcoming features like the leaderboard. BetLedger is not affiliated
+          with Hard Rock Bet.
         </p>
         <p className="mt-1">
           Gambling problem? Call{" "}

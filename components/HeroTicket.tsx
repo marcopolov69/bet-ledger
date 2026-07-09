@@ -24,15 +24,11 @@ export default function HeroTicket({ stats }: { stats: StatsSummary }) {
             {negative ? "House Wins" : "Printing Money"}
           </div>
         </div>
-        <div className="flex items-baseline justify-between">
-          <span className="label-paper">BurryApp · Official Ledger</span>
-        </div>
-
-        <div className="text-center pt-8 pb-6">
+        <div className="text-center pt-10 pb-6">
           <div className="label-paper">All-Time Net Profit / Loss</div>
           <div
             className={`display font-extrabold tnum leading-none tracking-tight text-6xl sm:text-8xl mt-2 ${
-              negative ? "text-[#d62f44]" : "text-[#058552]"
+              negative ? "text-[#c0331d]" : "text-[#058552]"
             }`}
           >
             {signedMoney(stats.netPnl)}

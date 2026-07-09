@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface DropZoneProps {
   onFile: (file: File) => void;
@@ -11,6 +11,33 @@ interface DropZoneProps {
 export default function DropZone({ onFile, error, busy }: DropZoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
+  const [ticketNo, setTicketNo] = useState<number | null>(null);
+  const [displayNo, setDisplayNo] = useState(0);
+
+  // Live ticket number: total submissions + 1, counting up on arrival.
+  useEffect(() => {
+    let raf = 0;
+    fetch("/api/submissions")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then(({ count }: { count: number }) => {
+        const target = count + 1;
+        setTicketNo(target);
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          setDisplayNo(target);
+          return;
+        }
+        const start = performance.now();
+        const dur = 900;
+        const tick = (t: number) => {
+          const p = Math.min(1, (t - start) / dur);
+          setDisplayNo(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+      })
+      .catch(() => {});
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   const handleFiles = useCallback(
     (files: FileList | null) => {
@@ -47,9 +74,11 @@ export default function DropZone({ onFile, error, busy }: DropZoneProps) {
         }`}
         style={dragging ? { boxShadow: "0 0 0 3px var(--accent), 0 30px 60px -20px rgba(0,0,0,.65)" } : undefined}
       >
-        <div className="flex items-baseline justify-between">
-          <span className="label-paper">BurryApp · Official Slip</span>
-          <span className="label-paper tnum">No. 000001</span>
+        <div className="flex items-baseline justify-end">
+          <span className="label-paper tnum">
+            Ticket Submission No.{" "}
+            {ticketNo === null ? "····" : String(displayNo).padStart(4, "0")}
+          </span>
         </div>
 
         <div className="text-center py-10">

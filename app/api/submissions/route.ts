@@ -6,9 +6,29 @@
 // (generated client-side) + a random submission id. No IPs, no fingerprints,
 // no names. The raw export itself contains no direct PII.
 
-import { put } from "@vercel/blob";
+import { list, put } from "@vercel/blob";
 import { parseBets } from "@/lib/parse";
 import { computeStats } from "@/lib/stats";
+
+/** Total submissions so far — powers the live "Ticket Submission No." on
+ *  the drop slip. CDN-cached for a minute so we don't list on every visit. */
+export async function GET() {
+  let count = 0;
+  let cursor: string | undefined;
+  do {
+    const page = await list({ prefix: "submissions/", cursor, limit: 1000 });
+    count += page.blobs.filter((b) => b.pathname.endsWith(".xls")).length;
+    cursor = page.cursor;
+  } while (cursor);
+  return Response.json(
+    { count },
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      },
+    }
+  );
+}
 
 const MAX_BYTES = 5_000_000;
 const UUID_RE =

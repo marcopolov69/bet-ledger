@@ -13,7 +13,7 @@ const BG = "#101418";
 const PAPER = "#f2ecda";
 const PAPER_INK = "#211f18";
 const PAPER_DIM = "#77715c";
-const RED = "#d62f44";
+const RED = "#c0331d";
 const GREEN = "#058552";
 const AMBER = "#9c6b1c";
 

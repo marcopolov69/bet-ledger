@@ -17,7 +17,7 @@ function Slip({
   rot: string;
 }) {
   const toneColor =
-    bigTone === "profit" ? "#058552" : bigTone === "loss" ? "#d62f44" : "#9c6b1c";
+    bigTone === "profit" ? "#058552" : bigTone === "loss" ? "#c0331d" : "#9c6b1c";
   return (
     <div className="slip px-5 pt-4 pb-0" style={{ transform: `rotate(${rot})` }}>
       <div className="flex items-baseline justify-between gap-2">

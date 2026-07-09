@@ -18,8 +18,8 @@
   /* semantics */
   --green: #08c972;
   --green-bright: #38e69b;
-  --red: #f43f52;
-  --red-bright: #ff6b7a;
+  --red: #e2543e;
+  --red-bright: #ff6a52;
   --amber: #e8a33d;
 
   /* brand accent (electric violet); amber stays for odds semantics */
@@ -164,7 +164,7 @@ main {
   mask-size: cover;
   -webkit-mask-size: cover;
 }
-.stamp--loss { color: #d62f44; }
+.stamp--loss { color: #c0331d; }
 .stamp--profit { color: #058552; }
 
 @keyframes stamp-in {

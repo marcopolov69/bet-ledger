@@ -17,7 +17,7 @@ const RED = "#c0331d";
 const GREEN = "#1e7d4b";
 const AMBER = "#9c6b1c";
 
-const SITE = "bet-ledger-mu.vercel.app";
+const SITE = "burryapp.com";
 
 function fontFamilies() {
   const css = getComputedStyle(document.documentElement);
@@ -219,7 +219,7 @@ export async function renderShareCard(stats: StatsSummary): Promise<Blob> {
   ctx.font = `700 24px ${mono}`;
   ctx.fillStyle = PAPER_DIM;
   ctx.textAlign = "left";
-  ctx.fillText("BETLEDGER · OFFICIAL LEDGER", SX + 56, SY + 76);
+  ctx.fillText("BURRYAPP · OFFICIAL LEDGER", SX + 56, SY + 76);
   if (stats.firstBetAt !== null && stats.lastBetAt !== null) {
     ctx.font = `400 22px ${mono}`;
     ctx.fillText(

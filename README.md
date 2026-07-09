@@ -1,4 +1,4 @@
-# BetLedger
+# BurryApp
 
 Drop in your Hard Rock Bet `All_Bets_Export.xls` and instantly see your all-time betting stats: total wagered, profit/loss, records, and charts.
 

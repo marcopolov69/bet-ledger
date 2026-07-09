@@ -48,7 +48,7 @@ export default function DropZone({ onFile, error, busy }: DropZoneProps) {
         style={dragging ? { boxShadow: "0 0 0 3px var(--amber), 0 30px 60px -20px rgba(0,0,0,.65)" } : undefined}
       >
         <div className="flex items-baseline justify-between">
-          <span className="label-paper">BetLedger · Official Slip</span>
+          <span className="label-paper">BurryApp · Official Slip</span>
           <span className="label-paper tnum">No. 000001</span>
         </div>
 

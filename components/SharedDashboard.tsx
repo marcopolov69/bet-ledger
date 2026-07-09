@@ -24,7 +24,7 @@ export default function SharedDashboard({
           href="/"
           className="display font-extrabold text-2xl tracking-wide uppercase"
         >
-          Bet<span className="text-[var(--amber)]">Ledger</span>
+          Burry<span className="text-[var(--amber)]">App</span>
         </Link>
         <Link
           href="/"
@@ -56,7 +56,7 @@ export default function SharedDashboard({
       </div>
 
       <footer className="mt-16 pt-6 border-t border-[var(--line)] text-[11px] text-[var(--ink-dim)] leading-relaxed">
-        <p>BetLedger is not affiliated with Hard Rock Bet.</p>
+        <p>BurryApp is not affiliated with Hard Rock Bet.</p>
         <p className="mt-1">
           Gambling problem? Call{" "}
           <a href="tel:1-800-522-4700" className="underline underline-offset-2">

@@ -1,4 +1,4 @@
-// Shared types for BetLedger.
+// Shared types for BurryApp.
 // Everything here must stay serializable (plain JSON) — StatsSummary is the
 // future Phase 2 leaderboard payload.
 

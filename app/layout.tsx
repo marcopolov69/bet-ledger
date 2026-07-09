@@ -15,21 +15,21 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BetLedger — See your real Hard Rock P&L",
+  title: "BurryApp — See your real Hard Rock P&L",
   description:
     "Drop in your Hard Rock Bet export and instantly see your all-time betting stats: total wagered, profit/loss, records, and charts. Graded instantly in your browser — no account needed.",
   openGraph: {
-    title: "BetLedger — See your real Hard Rock P&L",
+    title: "BurryApp — See your real Hard Rock P&L",
     description:
-      "Drop in your Hard Rock Bet export and instantly see your all-time betting stats. Nothing gets uploaded.",
+      "Drop in your Hard Rock Bet export and instantly see your all-time betting stats. No account needed.",
     type: "website",
-    siteName: "BetLedger",
+    siteName: "BurryApp",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BetLedger — See your real Hard Rock P&L",
+    title: "BurryApp — See your real Hard Rock P&L",
     description:
-      "Drop in your Hard Rock Bet export and instantly see your all-time betting stats. Nothing gets uploaded.",
+      "Drop in your Hard Rock Bet export and instantly see your all-time betting stats. No account needed.",
   },
 };
 

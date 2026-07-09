@@ -25,7 +25,7 @@ export default function HeroTicket({ stats }: { stats: StatsSummary }) {
           </div>
         </div>
         <div className="flex items-baseline justify-between">
-          <span className="label-paper">BetLedger · Official Ledger</span>
+          <span className="label-paper">BurryApp · Official Ledger</span>
         </div>
 
         <div className="text-center pt-8 pb-6">

@@ -26,7 +26,7 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
         if (old) URL.revokeObjectURL(old);
         return URL.createObjectURL(blob);
       });
-      const file = new File([blob], "betledger.png", { type: "image/png" });
+      const file = new File([blob], "burryapp.png", { type: "image/png" });
       setCanNativeShare(
         typeof navigator.canShare === "function" &&
           navigator.canShare({ files: [file] })
@@ -55,7 +55,7 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
     if (!imgUrl) return;
     const a = document.createElement("a");
     a.href = imgUrl;
-    a.download = "betledger.png";
+    a.download = "burryapp.png";
     a.click();
   }, [imgUrl]);
 
@@ -90,11 +90,11 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
 
   const nativeShare = useCallback(async () => {
     if (!blobRef.current) return;
-    const file = new File([blobRef.current], "betledger.png", {
+    const file = new File([blobRef.current], "burryapp.png", {
       type: "image/png",
     });
     try {
-      await navigator.share({ files: [file], title: "My BetLedger" });
+      await navigator.share({ files: [file], title: "My BurryApp" });
     } catch {
       // user cancelled — nothing to do
     }
@@ -132,7 +132,7 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
         >
           <div className="slip !rounded-b-none sm:!rounded-b-md w-full sm:max-w-md mx-auto max-h-[90vh] overflow-y-auto px-5 pt-5 pb-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="label-paper">BetLedger · Souvenir Print</div>
+              <div className="label-paper">BurryApp · Souvenir Print</div>
               <button
                 ref={closeRef}
                 onClick={() => setOpen(false)}
@@ -147,7 +147,7 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={imgUrl}
-                alt="Your BetLedger share card: net profit/loss with key stats"
+                alt="Your BurryApp share card: net profit/loss with key stats"
                 className="w-full rounded-md border border-[rgba(33,31,24,0.25)] shadow-[0_10px_30px_-12px_rgba(0,0,0,0.5)]"
               />
             )}

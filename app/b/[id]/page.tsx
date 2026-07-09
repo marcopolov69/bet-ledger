@@ -31,11 +31,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const share = await loadShare(id);
-  if (!share) return { title: "BetLedger" };
+  if (!share) return { title: "BurryApp" };
   const net = share.stats.netPnl;
   const money = `${net < 0 ? "−" : "+"}$${Math.abs(net).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
   return {
-    title: `${share.name}'s BetLedger — ${money} all-time`,
+    title: `${share.name}'s ledger — ${money} all-time · BurryApp`,
     description: `${share.stats.settledCount} settled bets, graded. ${net < 0 ? "The house wins." : "Printing money."}`,
     robots: { index: false },
   };

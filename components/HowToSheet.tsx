@@ -70,7 +70,7 @@ export default function HowToSheet({
 
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="label-paper">BetLedger · Field Guide</div>
+              <div className="label-paper">BurryApp · Field Guide</div>
               <h2 className="display font-bold text-2xl sm:text-3xl uppercase tracking-tight mt-1">
                 Get your export in ~1 minute
               </h2>

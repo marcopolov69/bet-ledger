@@ -11,6 +11,7 @@ import MonthlyChart from "@/components/MonthlyChart";
 import OddsBands from "@/components/OddsBands";
 import RecordSlips from "@/components/RecordSlips";
 import LeagueTables from "@/components/LeagueTables";
+import TheRead from "@/components/TheRead";
 import { parseBets, ParseError } from "@/lib/parse";
 import { computeStats } from "@/lib/stats";
 import type { StatsSummary } from "@/lib/types";
@@ -137,11 +138,12 @@ export default function Home() {
             <CumulativeChart stats={stats} />
             <MonthlyChart stats={stats} />
           </div>
-          <div className="grid lg:grid-cols-2 gap-4 items-start">
+          <div className="grid lg:grid-cols-3 gap-4 items-start">
             <OddsBands stats={stats} />
             <LeagueTables stats={stats} />
           </div>
           <RecordSlips stats={stats} />
+          <TheRead stats={stats} />
         </div>
       )}
 

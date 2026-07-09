@@ -176,30 +176,26 @@ main {
   animation: stamp-in 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) 0.35s both;
 }
 
-/* looping gradient sweep to draw the eye (how-to-export link) */
+/* breathing green beacon to draw the eye (how-to-export link).
+   Animates color/text-shadow — reliable everywhere, unlike animated
+   background-position on background-clip:text (frozen in Safari). */
 .shimmer-link {
-  background: linear-gradient(
-    90deg,
-    var(--ink-dim) 0%,
-    var(--ink-dim) 35%,
-    var(--green) 45%,
-    #b6ffdd 50%,
-    var(--green) 55%,
-    var(--ink-dim) 65%,
-    var(--ink-dim) 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 3.2s linear infinite;
+  color: var(--ink-dim);
+  animation: beacon 2.6s ease-in-out infinite;
 }
 .shimmer-link:hover {
   animation-play-state: paused;
+  color: var(--green-bright);
 }
-@keyframes shimmer {
-  0% { background-position: 100% 0; }
-  100% { background-position: -150% 0; }
+@keyframes beacon {
+  0%, 100% {
+    color: var(--ink-dim);
+    text-shadow: none;
+  }
+  50% {
+    color: var(--green-bright);
+    text-shadow: 0 0 14px rgba(8, 201, 114, 0.45);
+  }
 }
 
 @keyframes rise {
@@ -220,7 +216,6 @@ main {
   }
   .shimmer-link {
     animation: none;
-    background: none;
     color: var(--ink-dim);
   }
   * {

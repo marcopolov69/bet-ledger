@@ -9,6 +9,7 @@ import MonthlyChart from "@/components/MonthlyChart";
 import OddsBands from "@/components/OddsBands";
 import RecordSlips from "@/components/RecordSlips";
 import LeagueTables from "@/components/LeagueTables";
+import TheRead from "@/components/TheRead";
 
 export default function SharedDashboard({
   name,
@@ -48,11 +49,12 @@ export default function SharedDashboard({
           <CumulativeChart stats={stats} />
           <MonthlyChart stats={stats} />
         </div>
-        <div className="grid lg:grid-cols-2 gap-4 items-start">
+        <div className="grid lg:grid-cols-3 gap-4 items-start">
           <OddsBands stats={stats} />
           <LeagueTables stats={stats} />
         </div>
         <RecordSlips stats={stats} />
+        <TheRead stats={stats} />
       </div>
 
       <footer className="mt-16 pt-6 border-t border-[var(--line)] text-[11px] text-[var(--ink-dim)] leading-relaxed">

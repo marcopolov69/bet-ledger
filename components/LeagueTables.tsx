@@ -4,29 +4,33 @@ import type { LeagueRow, StatsSummary } from "@/lib/types";
 import { signedMoney } from "@/lib/format";
 
 function Table({ title, rows, tone }: { title: string; rows: LeagueRow[]; tone: "profit" | "loss" }) {
-  if (rows.length === 0) return null;
   return (
     <div className="panel px-4 py-4">
       <div className="label mb-3">{title}</div>
-      <table className="w-full text-sm">
-        <tbody>
+      {rows.length === 0 ? (
+        <div className="text-sm text-[var(--ink-dim)] py-2">Nothing here — yet.</div>
+      ) : (
+        <div>
           {rows.map((r) => (
-            <tr key={r.league} className="border-t border-[var(--line)] first:border-t-0">
-              <td className="py-2 pr-2">
+            <div
+              key={r.league}
+              className="flex items-baseline justify-between gap-3 py-2 border-t border-[var(--line)] first:border-t-0"
+            >
+              <span className="text-sm truncate min-w-0">
                 {r.league}
-                <span className="text-[var(--ink-dim)] text-[10px] tnum"> · {r.count}</span>
-              </td>
-              <td
-                className={`py-2 text-right tnum font-semibold whitespace-nowrap ${
+                <span className="text-[var(--ink-dim)] text-[10px] tnum whitespace-nowrap"> · {r.count}</span>
+              </span>
+              <span
+                className={`text-sm tnum font-semibold whitespace-nowrap shrink-0 ${
                   tone === "profit" ? "text-[var(--green-bright)]" : "text-[var(--red-bright)]"
                 }`}
               >
                 {signedMoney(r.pnl)}
-              </td>
-            </tr>
+              </span>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      )}
     </div>
   );
 }
@@ -41,12 +45,9 @@ export default function LeagueTables({ stats }: { stats: StatsSummary }) {
   if (best.length === 0 && worst.length === 0) return null;
 
   return (
-    <section className="rise rise-5">
-      <h2 className="label mb-3">Where the Money Went</h2>
-      <div className="grid sm:grid-cols-2 gap-4">
-        <Table title="Bleeding You Dry (worst 5)" rows={worst} tone="loss" />
-        <Table title="Actually Paying (best 5)" rows={best} tone="profit" />
-      </div>
-    </section>
+    <>
+      <Table title="Bleeding You Dry (worst 5)" rows={worst} tone="loss" />
+      <Table title="Actually Paying (best 5)" rows={best} tone="profit" />
+    </>
   );
 }

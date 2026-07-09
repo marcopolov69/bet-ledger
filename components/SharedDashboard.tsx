@@ -24,7 +24,7 @@ export default function SharedDashboard({
           href="/"
           className="display font-extrabold text-2xl tracking-wide lowercase"
         >
-          burry<span className="text-[var(--amber)]">app</span>
+          burry<span className="text-[var(--accent)]">app</span>
         </Link>
         <Link
           href="/"

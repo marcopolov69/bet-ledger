@@ -67,7 +67,7 @@ export default function Home() {
     <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <header className="flex items-baseline justify-between mb-10 sm:mb-14">
         <h1 className="display font-extrabold text-2xl tracking-wide lowercase">
-          burry<span className="text-[var(--amber)]">app</span>
+          burry<span className="text-[var(--accent)]">app</span>
         </h1>
         {stats ? (
           <button
@@ -93,7 +93,7 @@ export default function Home() {
           <div className="text-center mt-4">
             <button
               onClick={() => setHowToOpen(true)}
-              className="label cursor-pointer underline underline-offset-4 decoration-[var(--amber)] hover:text-[var(--ink)] transition-colors"
+              className="label cursor-pointer underline underline-offset-4 decoration-[var(--accent)] hover:text-[var(--ink)] transition-colors"
             >
               How to get your All Bets Export (45 seconds)
             </button>

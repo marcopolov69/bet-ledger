@@ -42,10 +42,10 @@ export default function DropZone({ onFile, error, busy }: DropZoneProps) {
           setDragging(false);
           handleFiles(e.dataTransfer.files);
         }}
-        className={`slip cursor-pointer select-none px-6 pt-8 pb-0 transition-transform duration-200 outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--amber)] ${
+        className={`slip cursor-pointer select-none px-6 pt-8 pb-0 transition-transform duration-200 outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${
           dragging ? "scale-[1.02] rotate-[0.5deg]" : "hover:-rotate-[0.4deg]"
         }`}
-        style={dragging ? { boxShadow: "0 0 0 3px var(--amber), 0 30px 60px -20px rgba(0,0,0,.65)" } : undefined}
+        style={dragging ? { boxShadow: "0 0 0 3px var(--accent), 0 30px 60px -20px rgba(0,0,0,.65)" } : undefined}
       >
         <div className="flex items-baseline justify-between">
           <span className="label-paper">BurryApp · Official Slip</span>

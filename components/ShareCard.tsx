@@ -106,7 +106,7 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
         <button
           onClick={generate}
           disabled={busy}
-          className="display uppercase tracking-widest text-sm font-semibold cursor-pointer rounded-md border border-[var(--amber)] px-6 py-2.5 text-[var(--amber)] hover:bg-[var(--amber)] hover:text-[var(--bg)] transition-colors disabled:opacity-50"
+          className="display uppercase tracking-widest text-sm font-semibold cursor-pointer rounded-md border border-[var(--accent)] px-6 py-2.5 text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-colors disabled:opacity-50"
         >
           {busy ? "Printing…" : "Share this ledger"}
         </button>

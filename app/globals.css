@@ -21,6 +21,10 @@
   --red: #f43f52;
   --red-bright: #ff6b7a;
   --amber: #e8a33d;
+
+  /* brand accent (electric violet); amber stays for odds semantics */
+  --accent: #8b7cf7;
+  --accent-ink: #6450e3; /* darker violet for cream paper */
 }
 
 @theme inline {
@@ -36,6 +40,7 @@
   --color-profit: var(--green);
   --color-loss: var(--red);
   --color-odds: var(--amber);
+  --color-accent: var(--accent);
   --font-display: var(--font-saira), "Arial Narrow", sans-serif;
   --font-mono: var(--font-plex-mono), "Courier New", monospace;
 }

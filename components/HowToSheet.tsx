@@ -86,7 +86,7 @@ export default function HowToSheet({
           </div>
 
           <div className="mt-4 flex items-baseline gap-4">
-            <span className="display font-bold text-2xl text-[var(--amber)] tnum w-5 text-right shrink-0">
+            <span className="display font-bold text-2xl text-[var(--accent-ink)] tnum w-5 text-right shrink-0">
               1
             </span>
             <p className="text-sm leading-relaxed">
@@ -95,7 +95,7 @@ export default function HowToSheet({
                 href="https://www.hardrock.bet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold underline underline-offset-2 decoration-[var(--amber)] hover:text-[#9c6b1c]"
+                className="font-semibold underline underline-offset-2 decoration-[var(--accent-ink)] hover:text-[#4a38c2]"
               >
                 hardrock.bet ↗
               </a>
@@ -103,7 +103,7 @@ export default function HowToSheet({
           </div>
 
           <div className="mt-3 flex items-baseline gap-4">
-            <span className="display font-bold text-2xl text-[var(--amber)] tnum w-5 text-right shrink-0">
+            <span className="display font-bold text-2xl text-[var(--accent-ink)] tnum w-5 text-right shrink-0">
               2
             </span>
             <p className="text-sm leading-relaxed">

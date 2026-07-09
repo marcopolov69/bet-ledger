@@ -182,9 +182,9 @@ main {
     90deg,
     var(--ink-dim) 0%,
     var(--ink-dim) 35%,
-    var(--accent) 45%,
-    #cfc8ff 50%,
-    var(--accent) 55%,
+    var(--green) 45%,
+    #b6ffdd 50%,
+    var(--green) 55%,
     var(--ink-dim) 65%,
     var(--ink-dim) 100%
   );

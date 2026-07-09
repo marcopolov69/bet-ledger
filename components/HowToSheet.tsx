@@ -57,7 +57,7 @@ export default function HowToSheet({
         role="dialog"
         aria-modal="true"
         aria-label="How to get your Hard Rock bet export"
-        className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-xl transition-transform duration-300 ease-out ${
+        className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl transition-transform duration-300 ease-out ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
       >

@@ -121,7 +121,7 @@ export default function Home() {
           <div className="text-center mt-4">
             <button
               onClick={() => setHowToOpen(true)}
-              className="label shimmer-link cursor-pointer underline underline-offset-4 decoration-[var(--accent)]"
+              className="label shimmer-link cursor-pointer underline underline-offset-4 decoration-[var(--green)]"
             >
               How to get your All Bets Export (45 seconds)
             </button>

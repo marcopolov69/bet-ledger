@@ -16,10 +16,10 @@
   --paper-dim: #77715c;
 
   /* semantics */
-  --green: #2e9e63;
-  --green-bright: #3fc07c;
-  --red: #e2543e;
-  --red-bright: #ff6a52;
+  --green: #08c972;
+  --green-bright: #38e69b;
+  --red: #f43f52;
+  --red-bright: #ff6b7a;
   --amber: #e8a33d;
 }
 
@@ -159,8 +159,8 @@ main {
   mask-size: cover;
   -webkit-mask-size: cover;
 }
-.stamp--loss { color: #c0331d; }
-.stamp--profit { color: #1e7d4b; }
+.stamp--loss { color: #d62f44; }
+.stamp--profit { color: #058552; }
 
 @keyframes stamp-in {
   0% { transform: rotate(var(--stamp-rot, -8deg)) scale(2.4); opacity: 0; }

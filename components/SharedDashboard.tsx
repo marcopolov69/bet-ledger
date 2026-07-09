@@ -22,9 +22,9 @@ export default function SharedDashboard({
       <header className="flex items-baseline justify-between mb-8 sm:mb-10">
         <Link
           href="/"
-          className="display font-extrabold text-2xl tracking-wide uppercase"
+          className="display font-extrabold text-2xl tracking-wide lowercase"
         >
-          Burry<span className="text-[var(--amber)]">App</span>
+          burry<span className="text-[var(--amber)]">app</span>
         </Link>
         <Link
           href="/"

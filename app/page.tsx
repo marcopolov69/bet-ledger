@@ -66,8 +66,8 @@ export default function Home() {
   return (
     <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <header className="flex items-baseline justify-between mb-10 sm:mb-14">
-        <h1 className="display font-extrabold text-2xl tracking-wide uppercase">
-          Burry<span className="text-[var(--amber)]">App</span>
+        <h1 className="display font-extrabold text-2xl tracking-wide lowercase">
+          burry<span className="text-[var(--amber)]">app</span>
         </h1>
         {stats ? (
           <button

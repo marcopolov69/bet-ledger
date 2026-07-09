@@ -32,7 +32,7 @@ export default function HeroTicket({ stats }: { stats: StatsSummary }) {
           <div className="label-paper">All-Time Net Profit / Loss</div>
           <div
             className={`display font-extrabold tnum leading-none tracking-tight text-6xl sm:text-8xl mt-2 ${
-              negative ? "text-[#c0331d]" : "text-[#1e7d4b]"
+              negative ? "text-[#d62f44]" : "text-[#058552]"
             }`}
           >
             {signedMoney(stats.netPnl)}

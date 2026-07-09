@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "pull-submissions": "node scripts/pull-submissions.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.5.0",

@@ -15,7 +15,24 @@ import { parseBets, ParseError } from "@/lib/parse";
 import { computeStats } from "@/lib/stats";
 import type { StatsSummary } from "@/lib/types";
 
-const STORAGE_KEY = "betledger:stats:v1";
+const STORAGE_KEY = "burryapp:stats:v1";
+const LEGACY_STORAGE_KEY = "betledger:stats:v1";
+const DEVICE_KEY = "burryapp:device:v1";
+
+/** Anonymous, random, per-browser id — groups repeat submissions without
+ *  identifying anyone. Never derived from IP or fingerprinting. */
+function getDeviceId(): string {
+  try {
+    let id = localStorage.getItem(DEVICE_KEY);
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem(DEVICE_KEY, id);
+    }
+    return id;
+  } catch {
+    return "no-device";
+  }
+}
 
 export default function Home() {
   const [stats, setStats] = useState<StatsSummary | null>(null);
@@ -26,6 +43,13 @@ export default function Home() {
   // Returning visitors get their last graded dashboard back instantly.
   useEffect(() => {
     try {
+      // one-time migration from the pre-rename key
+      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacy && !localStorage.getItem(STORAGE_KEY)) {
+        localStorage.setItem(STORAGE_KEY, legacy);
+      }
+      if (legacy) localStorage.removeItem(LEGACY_STORAGE_KEY);
+
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) setStats(JSON.parse(saved).stats as StatsSummary);
     } catch {
@@ -50,7 +74,11 @@ export default function Home() {
         // storage full/blocked — dashboard still works
       }
       // Fire-and-forget: archive the submission server-side.
-      fetch("/api/submissions", { method: "POST", body: text }).catch(() => {});
+      fetch("/api/submissions", {
+        method: "POST",
+        body: text,
+        headers: { "x-device-id": getDeviceId() },
+      }).catch(() => {});
     } catch (e) {
       setStats(null);
       setError(

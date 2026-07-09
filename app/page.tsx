@@ -111,7 +111,7 @@ export default function Home() {
             Grade another ticket
           </button>
         ) : (
-          <span className="label hidden sm:inline">The house always counts.</span>
+          <span className="label hidden sm:inline">Outplay the house.</span>
         )}
       </header>
 
@@ -121,7 +121,7 @@ export default function Home() {
           <div className="text-center mt-4">
             <button
               onClick={() => setHowToOpen(true)}
-              className="label cursor-pointer underline underline-offset-4 decoration-[var(--accent)] hover:text-[var(--ink)] transition-colors"
+              className="label shimmer-link cursor-pointer underline underline-offset-4 decoration-[var(--accent)]"
             >
               How to get your All Bets Export (45 seconds)
             </button>

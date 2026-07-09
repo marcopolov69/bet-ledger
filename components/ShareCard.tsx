@@ -11,6 +11,11 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
   const blobRef = useRef<Blob | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const [canNativeShare, setCanNativeShare] = useState(false);
+  const [linkName, setLinkName] = useState("");
+  const [linkUrl, setLinkUrl] = useState<string | null>(null);
+  const [linkBusy, setLinkBusy] = useState(false);
+  const [linkError, setLinkError] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const generate = useCallback(async () => {
     setBusy(true);
@@ -53,6 +58,35 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
     a.download = "betledger.png";
     a.click();
   }, [imgUrl]);
+
+  const createLink = useCallback(async () => {
+    if (!linkName.trim() || linkBusy) return;
+    setLinkBusy(true);
+    setLinkError(false);
+    try {
+      const res = await fetch("/api/share", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: linkName.trim(), stats }),
+      });
+      if (!res.ok) throw new Error("share failed");
+      const { id } = await res.json();
+      setLinkUrl(`${window.location.origin}/b/${id}`);
+    } catch {
+      setLinkError(true);
+    } finally {
+      setLinkBusy(false);
+    }
+  }, [linkName, linkBusy, stats]);
+
+  const copyLink = useCallback(async () => {
+    if (!linkUrl) return;
+    try {
+      await navigator.clipboard.writeText(linkUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {}
+  }, [linkUrl]);
 
   const nativeShare = useCallback(async () => {
     if (!blobRef.current) return;
@@ -137,6 +171,52 @@ export default function ShareCard({ stats }: { stats: StatsSummary }) {
                   Save it, then post it anywhere.
                 </div>
               )}
+            </div>
+
+            <div className="perf mt-5" />
+            <div className="pt-4">
+              <div className="label-paper mb-2">Live link</div>
+              {!linkUrl ? (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={linkName}
+                    onChange={(e) => setLinkName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && createLink()}
+                    placeholder="Your name"
+                    maxLength={24}
+                    className="flex-1 min-w-0 rounded-md border-2 border-[rgba(33,31,24,0.3)] bg-transparent px-3 py-2 text-sm placeholder:text-[var(--paper-dim)] focus:outline-none focus:border-[var(--paper-ink)]"
+                  />
+                  <button
+                    onClick={createLink}
+                    disabled={!linkName.trim() || linkBusy}
+                    className="display uppercase tracking-widest text-sm font-semibold cursor-pointer rounded-md border-2 border-[var(--paper-ink)] px-4 py-2 hover:bg-[var(--paper-ink)] hover:text-[var(--paper)] transition-colors disabled:opacity-40 disabled:cursor-default"
+                  >
+                    {linkBusy ? "Printing…" : "Create"}
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    readOnly
+                    value={linkUrl}
+                    onFocus={(e) => e.target.select()}
+                    className="flex-1 min-w-0 rounded-md border-2 border-[rgba(33,31,24,0.3)] bg-[rgba(33,31,24,0.05)] px-3 py-2 text-xs tnum"
+                  />
+                  <button
+                    onClick={copyLink}
+                    className="display uppercase tracking-widest text-sm font-semibold cursor-pointer rounded-md bg-[var(--paper-ink)] text-[var(--paper)] px-4 py-2 hover:opacity-85 transition-opacity"
+                  >
+                    {copied ? "Copied!" : "Copy"}
+                  </button>
+                </div>
+              )}
+              <p className="mt-2 text-[11px] text-[var(--paper-dim)] leading-snug">
+                {linkError
+                  ? "Couldn't create the link — try again."
+                  : "Anyone with the link sees a live view of this dashboard with your name on it."}
+              </p>
             </div>
           </div>
         </div>

@@ -90,7 +90,7 @@ export default function DropZone({ onFile, error, busy }: DropZoneProps) {
             <span className="font-semibold text-[var(--paper-ink)]">
               All_Bets_Export.xls
             </span>{" "}
-            — or click to browse.
+            — or click to upload.
           </p>
         </div>
 

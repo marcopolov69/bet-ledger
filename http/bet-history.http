@@ -1,8 +1,7 @@
-@token=
+@token={{$env.TOKEN}}
 
 ### BET_HISTORY
 POST https://api.hardrocksportsbook.com/sportsbook/v1/api/betHistory
-Content-Type: application/x-www-form-urlencoded
 
 sessionToken={{token}}
 &firstResult=0

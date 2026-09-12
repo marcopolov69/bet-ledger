@@ -10,16 +10,34 @@ import { list, put } from "@vercel/blob";
 import { parseBets } from "@/lib/parse";
 import { computeStats } from "@/lib/stats";
 
+/** Last successful count, held in module memory so a brief Blob outage serves
+ *  the previous number instead of blanking the slip. Per-instance and lost on
+ *  cold start — a cushion, not a cache. */
+let lastCount: number | null = null;
+
 /** Total submissions so far — powers the live "Ticket Submission No." on
  *  the drop slip. CDN-cached for a minute so we don't list on every visit. */
 export async function GET() {
   let count = 0;
   let cursor: string | undefined;
-  do {
-    const page = await list({ prefix: "submissions/", cursor, limit: 1000 });
-    count += page.blobs.filter((b) => b.pathname.endsWith(".xls")).length;
-    cursor = page.cursor;
-  } while (cursor);
+  try {
+    do {
+      const page = await list({ prefix: "submissions/", cursor, limit: 1000 });
+      count += page.blobs.filter((b) => b.pathname.endsWith(".xls")).length;
+      cursor = page.cursor;
+    } while (cursor);
+  } catch (err) {
+    // Blob unreachable, or unconfigured (no BLOB_READ_WRITE_TOKEN in local
+    // dev). The ticket number is decoration — degrade to the last known count,
+    // or to null, which the slip renders as "····". Short cache so the CDN
+    // doesn't pin the degraded answer for a full minute.
+    console.error("submissions: blob list failed", err);
+    return Response.json(
+      { count: lastCount },
+      { headers: { "Cache-Control": "public, s-maxage=10" } }
+    );
+  }
+  lastCount = count;
   return Response.json(
     { count },
     {

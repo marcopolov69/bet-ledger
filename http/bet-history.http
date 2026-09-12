@@ -1,0 +1,24 @@
+@token=
+
+### BET_HISTORY
+POST https://api.hardrocksportsbook.com/sportsbook/v1/api/betHistory
+Content-Type: application/x-www-form-urlencoded
+
+sessionToken={{token}}
+&firstResult=0
+&maxResults=100
+&status=ALL
+&includeEventResults=true
+&excludeArenaBets=true
+&locale=en_US
+
+### TRANSACTION_HISTORY
+POST https://api.hardrocksportsbook.com/sportsbook/v1/api/getTransactionHistory \
+Content-Type: application/x-www-form-urlencoded
+
+sessionToken={{token}}
+&from=2025-01-01
+&to=2026-09-12
+&maxResults=100
+&casinoTransactions=false
+&locale=en_US

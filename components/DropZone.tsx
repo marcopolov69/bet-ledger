@@ -19,7 +19,10 @@ export default function DropZone({ onFile, error, busy }: DropZoneProps) {
     let raf = 0;
     fetch("/api/submissions")
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then(({ count }: { count: number }) => {
+      .then(({ count }: { count: number | null }) => {
+        // Server couldn't reach Blob — leave ticketNo null so the slip keeps
+        // showing "····" rather than a made-up number.
+        if (typeof count !== "number") return;
         const target = count + 1;
         setTicketNo(target);
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
